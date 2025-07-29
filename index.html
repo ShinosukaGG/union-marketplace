@@ -1,0 +1,79 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Union NFT Marketplace</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="faucet-screen" class="center-screen">
+    <div class="faucet-box large-faucet-box">
+      <h2>Faucet $nU to start minting your favourite NFTs now!</h2>
+      <label for="username">Enter your username to begin:</label>
+      <input type="text" id="username" placeholder="e.g. shinosuka_eth">
+      <button onclick="claimFaucet()">Faucet $nU</button>
+    </div>
+  </div>  <div id="main-site" style="display:none">
+    <header class="site-header">
+      <div class="left">
+        <img src="union-logo.png" class="logo">
+        <span class="union-text">UNION</span>
+      </div>
+      <div class="center">Union Marketplace</div>
+      <div class="right">
+        <button id="theme-toggle" title="Toggle Theme">🌙</button>
+        <div class="wallet-box">
+          <img src="union-logo.png" class="mini-logo">
+          <span id="balance">1 $nU</span>
+        </div>
+        <img id="twitter-pfp" src="pfp.png" class="pfp">
+      </div>
+    </header><section class="hero-box">
+  <h1>Union Marketplace</h1>
+  <div class="search-section large-search">
+    <input type="text" placeholder="Search...">
+    <button>Search</button>
+  </div>
+</section>
+
+<section class="collections">
+  <div class="collection-box large-collection">
+    <img src="zkgfs-banner.png" class="collection-banner">
+    <h2>ZKGFs</h2>
+    <p>This is a collection of ZKGFs unlocked by the Union Community, Secure your ZKGF today!</p>
+    <div class="price">Price: 0.01 $nU</div>
+    <button onclick="openCollection('zkgf')">View Collection</button>
+  </div>
+  <div class="collection-box large-collection">
+    <img src="yapybara-banner.png" class="collection-banner">
+    <h2>Union Yapybara</h2>
+    <p>This is a collection of all the Union Yapybara artworks made by me, Secure your favourite piece now!</p>
+    <div class="price">Price: 0.01 $nU</div>
+    <button onclick="openCollection('yapybara')">View Collection</button>
+  </div>
+</section>
+
+<div id="collection-modal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <div id="collection-header"></div>
+    <div class="nft-list" id="nft-list"></div>
+  </div>
+</div>
+
+<div id="mint-modal" class="mint-modal hidden">
+  <div class="mint-content">
+    <h2>Congratulations 🎉</h2>
+    <img id="minted-img" src="">
+    <h3 id="minted-name"></h3>
+    <p id="minted-desc"></p>
+    <button onclick="closeMintModal()">Keep Minting</button>
+  </div>
+</div>
+
+<footer>
+  This is a modal website of Union's marketplace and holds no on-chain activity. $nU is a faucet that holds no value and this just for entertainment purposes.
+</footer>
+
+  </div>  <script src="script.js"></script></body>
+</html>
