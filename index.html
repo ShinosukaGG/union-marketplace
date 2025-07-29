@@ -10,7 +10,7 @@
     <div class="faucet-box large-faucet-box">
       <h2>Faucet $nU to start minting your favourite NFTs now!</h2>
       <label for="username">Enter your username to begin:</label>
-      <input type="text" id="username" placeholder="e.g. shinosuka_eth">
+      <input type="text" id="username" placeholder="Shinosuka_eth">
       <button onclick="claimFaucet()">Faucet $nU</button>
     </div>
   </div>  <div id="main-site" style="display:none">
@@ -23,10 +23,10 @@
       <div class="right">
         <button id="theme-toggle" title="Toggle Theme">🌙</button>
         <div class="wallet-box">
-          <img src="badge3.jpeg" class="mini-logo">
+          <img src="badge3.png" class="mini-logo">
           <span id="balance">1 $nU</span>
         </div>
-        <img id="twitter-pfp" src="pfp.png" class="pfp">
+        <img id="twitter-pfp" src="" class="pfp">
       </div>
     </header><section class="hero-box">
   <h1>Union Marketplace</h1>
@@ -38,14 +38,14 @@
 
 <section class="collections">
   <div class="collection-box large-collection">
-    <img src="zkgfs-banner.png" class="collection-banner">
+    <img src="zkgf.png" class="collection-banner">
     <h2>ZKGFs</h2>
     <p>This is a collection of ZKGFs unlocked by the Union Community, Secure your ZKGF today!</p>
     <div class="price">Price: 0.01 $nU</div>
     <button onclick="openCollection('zkgf')">View Collection</button>
   </div>
   <div class="collection-box large-collection">
-    <img src="yapybara-banner.png" class="collection-banner">
+    <img src="yapy.png" class="collection-banner">
     <h2>Union Yapybara</h2>
     <p>This is a collection of all the Union Yapybara artworks made by me, Secure your favourite piece now!</p>
     <div class="price">Price: 0.01 $nU</div>
@@ -64,10 +64,10 @@
 <div id="mint-modal" class="mint-modal hidden">
   <div class="mint-content">
     <h2>Congratulations 🎉</h2>
-    <img id="minted-img" src="">
+    <img id="minted-img" src="" style="max-width: 100%; height: auto; border-radius: 10px;">
     <h3 id="minted-name"></h3>
     <p id="minted-desc"></p>
-    <button onclick="closeMintModal()">Keep Minting</button>
+    <button onclick="closeMintModal()" style="margin-top: 1rem; padding: 0.75rem 2rem; font-size: 1rem;">Keep Minting</button>
   </div>
 </div>
 
