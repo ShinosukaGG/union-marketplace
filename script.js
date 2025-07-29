@@ -9,11 +9,11 @@ function claimFaucet() {
   localStorage.setItem("unionUser", username);
   localStorage.setItem("nuBalance", "1.00");
 
-  document.getElementById("faucet-screen").style.display = "none";
-  document.getElementById("main-site").style.display = "block";
-  document.getElementById("balance").textContent = "1.00 $nU";
+  // Save theme before reload
+  const theme = document.body.classList.contains("light-mode") ? "light" : "dark";
+  localStorage.setItem("theme", theme);
 
-  document.getElementById("twitter-pfp").src = "pfp.png";
+  showMainSite(username);
 }
 
 // --- On Load ---
@@ -22,20 +22,32 @@ window.onload = function () {
   const balance = localStorage.getItem("nuBalance");
   const theme = localStorage.getItem("theme");
 
-  if (user) {
-    document.getElementById("faucet-screen").style.display = "none";
-    document.getElementById("main-site").style.display = "block";
-    document.getElementById("balance").textContent = `${parseFloat(balance).toFixed(2)} $nU`;
-    document.getElementById("twitter-pfp").src = "pfp.png";
-  }
-
   if (theme === "light") {
     document.body.classList.add("light-mode");
     document.getElementById("theme-toggle").textContent = "🌞";
   }
 
+  if (user) {
+    showMainSite(user);
+    document.getElementById("balance").textContent = `${parseFloat(balance).toFixed(2)} $nU`;
+  }
+
   document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
 };
+
+// --- Show Main Site + PFP ---
+function showMainSite(username) {
+  document.getElementById("faucet-screen").style.display = "none";
+  document.getElementById("main-site").style.display = "block";
+
+  // Set Twitter PFP via Unavatar
+  const pfpUrl = `https://unavatar.io/twitter/${username}`;
+  const pfpImg = document.getElementById("twitter-pfp");
+  pfpImg.src = pfpUrl;
+  pfpImg.onerror = () => {
+    pfpImg.src = "pfp.png"; // fallback if user not found
+  };
+}
 
 // --- Theme Toggle ---
 function toggleTheme() {
@@ -185,7 +197,7 @@ function downloadImage(src, filename) {
   };
 }
 
-// Load confetti library
+// Load confetti library if not already
 if (!window.confetti) {
   const script = document.createElement("script");
   script.src = "https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js";
