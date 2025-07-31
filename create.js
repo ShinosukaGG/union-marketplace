@@ -1,119 +1,67 @@
-// This file expects Supabase to be loaded via CDN in create.html:
-// <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"></script>
-
+// Supabase setup (via CDN in create.html)
 const SUPABASE_URL = "https://bgoinnfdoxlnktkswzpi.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJnb2lubmZkb3hsbmt0a3N3enBpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM5Njg4MzEsImV4cCI6MjA2OTU0NDgzMX0.dWltf8vuwrB7-54fdFq-xwAqtGjV769ywuLxF4f3EDE";
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-let artworks = [];
-
-// When page loads, reset the artworks list
-window.onload = function () {
-  artworks = [];
-  renderArtworksList();
-};
-
-// Handle single artwork upload form
-document.getElementById('artwork-form').onsubmit = function (e) {
+// Handle single artwork upload
+document.getElementById('single-artwork-form').onsubmit = async function (e) {
   e.preventDefault();
 
   const imageInput = document.getElementById('artwork-image');
-  const artworkName = document.getElementById('artwork-name').value.trim();
-  const artworkPrice = document.getElementById('artwork-price').value.trim();
+  const name = document.getElementById('artwork-name').value.trim();
+  const price = document.getElementById('artwork-price').value.trim();
 
-  if (!imageInput.files.length || !artworkName || !artworkPrice) {
-    alert('Please fill all artwork fields and select an image.');
+  if (!imageInput.files.length || !name || !price) {
+    alert('Please fill all fields and select an image.');
     return;
   }
 
   const file = imageInput.files[0];
-  artworks.push({
-    file,
-    name: artworkName,
-    price: artworkPrice,
-    url: '',
-  });
 
-  renderArtworksList();
-
-  imageInput.value = '';
-  document.getElementById('artwork-name').value = '';
-  document.getElementById('artwork-price').value = '';
-};
-
-// Show the in-memory artwork list above the Upload Collection button
-function renderArtworksList() {
-  const container = document.getElementById('uploaded-artworks-list');
-  if (!container) return;
-  if (artworks.length === 0) {
-    container.innerHTML = "<p style='opacity:0.6'>No artworks added yet.</p>";
-    return;
-  }
-  container.innerHTML = artworks.map(
-    (a, idx) =>
-      `<div class="uploaded-artwork-card">
-        <strong>${idx + 1}. ${a.name}</strong> — <span>${a.price} $nU</span>
-        <span style="font-size:0.95em;color:#888; margin-left:1em;">${a.file.name}</span>
-      </div>`
-  ).join('');
-}
-
-// Handle Upload Collection button
-document.getElementById('final-upload-btn').addEventListener("click", async function () {
-  const name = document.getElementById('collection-name').value.trim();
-  const desc = document.getElementById('collection-desc').value.trim();
-
-  if (!name || !desc) {
-    alert('Please fill in the collection name and description.');
-    return;
-  }
-  if (artworks.length === 0) {
-    alert('Please upload at least one artwork.');
-    return;
-  }
-
-  // 1. Create collection
-  let collectionId = null;
-  const { data, error } = await supabase
-    .from('collections')
-    .insert([{ name, description: desc }])
+  // Step 1: Insert NFT metadata to get UUID
+  const { data: insertData, error: insertError } = await supabase
+    .from('nfts')
+    .insert([{ name, price }])
     .select()
     .single();
 
-  if (error) {
-    alert('Failed to create collection: ' + error.message);
+  if (insertError || !insertData) {
+    alert('Error creating NFT metadata: ' + insertError.message);
     return;
   }
-  collectionId = data.id;
 
-  // 2. Upload artworks one by one
-  for (let a of artworks) {
-    const filePath = `${collectionId}/${Date.now()}_${a.file.name}`;
-    const { data: storageData, error: storageError } = await supabase
-      .storage
-      .from('nft-collections')
-      .upload(filePath, a.file);
+  const nftId = insertData.id; // UUID from Supabase
+  const filePath = `artworks/${nftId}_${file.name}`;
 
-    if (storageError) {
-      alert('Failed to upload artwork: ' + storageError.message);
-      return;
-    }
+  // Step 2: Upload image to Supabase Storage
+  const { data: storageData, error: storageError } = await supabase
+    .storage
+    .from('nft-collections')
+    .upload(filePath, file);
 
-    // Get public URL
-    const { data: publicUrlData } = supabase
-      .storage
-      .from('nft-collections')
-      .getPublicUrl(filePath);
-    const imageUrl = publicUrlData.publicUrl;
-
-    await supabase.from('nfts').insert([{
-      collection_id: collectionId,
-      name: a.name,
-      price: a.price,
-      image_url: imageUrl,
-    }]);
+  if (storageError) {
+    alert('Error uploading image: ' + storageError.message);
+    return;
   }
 
-  alert('Collection and artworks uploaded successfully!');
-  window.location.href = `collection.html?id=${collectionId}`;
-});
+  // Step 3: Get public image URL
+  const { data: urlData } = supabase
+    .storage
+    .from('nft-collections')
+    .getPublicUrl(filePath);
+  const imageUrl = urlData.publicUrl;
+
+  // Step 4: Update NFT record with image_url
+  const { error: updateError } = await supabase
+    .from('nfts')
+    .update({ image_url: imageUrl })
+    .eq('id', nftId);
+
+  if (updateError) {
+    alert('Error saving image URL: ' + updateError.message);
+    return;
+  }
+
+  // Step 5: Redirect to minting page
+  window.location.href = `artwork.html?id=${nftId}`;
+};
