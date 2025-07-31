@@ -1,4 +1,5 @@
-// NO import statement for CDN! Use the CDN script in your HTML above.
+// This file expects Supabase to be loaded via CDN in create.html:
+// <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"></script>
 
 const SUPABASE_URL = "https://bgoinnfdoxlnktkswzpi.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJnb2lubmZkb3hsbmt0a3N3enBpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM5Njg4MzEsImV4cCI6MjA2OTU0NDgzMX0.dWltf8vuwrB7-54fdFq-xwAqtGjV769ywuLxF4f3EDE";
@@ -6,11 +7,13 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 let artworks = [];
 
+// When page loads, reset the artworks list
 window.onload = function () {
   artworks = [];
   renderArtworksList();
 };
 
+// Handle single artwork upload form
 document.getElementById('artwork-form').onsubmit = function (e) {
   e.preventDefault();
 
@@ -38,6 +41,7 @@ document.getElementById('artwork-form').onsubmit = function (e) {
   document.getElementById('artwork-price').value = '';
 };
 
+// Show the in-memory artwork list above the Upload Collection button
 function renderArtworksList() {
   const container = document.getElementById('uploaded-artworks-list');
   if (!container) return;
@@ -54,6 +58,7 @@ function renderArtworksList() {
   ).join('');
 }
 
+// Handle Upload Collection button
 document.getElementById('final-upload-btn').addEventListener("click", async function () {
   const name = document.getElementById('collection-name').value.trim();
   const desc = document.getElementById('collection-desc').value.trim();
@@ -67,7 +72,7 @@ document.getElementById('final-upload-btn').addEventListener("click", async func
     return;
   }
 
-  // 1. Create collection in Supabase
+  // 1. Create collection
   let collectionId = null;
   const { data, error } = await supabase
     .from('collections')
@@ -81,7 +86,7 @@ document.getElementById('final-upload-btn').addEventListener("click", async func
   }
   collectionId = data.id;
 
-  // 2. Upload artworks
+  // 2. Upload artworks one by one
   for (let a of artworks) {
     const filePath = `${collectionId}/${Date.now()}_${a.file.name}`;
     const { data: storageData, error: storageError } = await supabase
