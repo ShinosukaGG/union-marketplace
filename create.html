@@ -3,58 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Create Collection – Union Artworks Marketplace</title>
+  <title>Upload Artwork – Union Artworks Marketplace</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header class="site-header">
     <div class="left">
-      <img src="union-logo.png" class="logo" />
+      <img src="badge3.png" class="logo" />
       <span class="union-text">UNION</span>
     </div>
-    <div class="center">Create Your Collection</div>
+    <div class="center">Upload Your Artwork</div>
     <div class="right">
       <a href="index.html" style="color: var(--blue); text-decoration: none; font-weight: bold;">← Back</a>
     </div>
   </header>
 
   <main class="create-main">
-    <h1 class="create-title">Create Your Own Collection</h1>
-    <form id="collection-form" class="collection-form" onsubmit="return false;">
-      <label for="collection-name">Collection Name</label>
-      <input type="text" id="collection-name" placeholder="e.g. Union Masterpieces" required />
+    <h1 class="create-title">Mint Your Own Union Artwork</h1>
 
-      <label for="collection-desc">Collection Description</label>
-      <textarea id="collection-desc" rows="3" placeholder="Describe your collection..." required></textarea>
+    <form id="single-artwork-form" class="artwork-form" onsubmit="return false;">
+      <label for="artwork-image">Artwork Image (JPEG or PNG)</label>
+      <input type="file" id="artwork-image" accept=".jpg,.jpeg,.png" required />
+
+      <label for="artwork-name">Artwork Name</label>
+      <input type="text" id="artwork-name" placeholder="e.g. Genesis #1" required />
+
+      <label for="artwork-price">Artwork Price (in $nU)</label>
+      <input type="number" id="artwork-price" step="0.01" min="0" placeholder="e.g. 0.01" required />
+
+      <button type="submit" class="btn-wide final-upload-btn">Upload Artwork</button>
     </form>
-
-    <section class="artwork-upload-section">
-      <h2>Add Artworks</h2>
-      <form id="artwork-form" class="artwork-form" onsubmit="return false;">
-        <label for="artwork-image">Artwork Image (JPEG or PNG, one at a time)</label>
-        <input type="file" id="artwork-image" accept=".jpg,.jpeg,.png" required />
-
-        <label for="artwork-name">Artwork Name</label>
-        <input type="text" id="artwork-name" placeholder="e.g. Genesis #1" required />
-
-        <label for="artwork-price">Artwork Price (in $nU)</label>
-        <input type="number" id="artwork-price" step="0.01" min="0" placeholder="e.g. 0.01" required />
-
-        <button type="submit" class="btn-wide">Upload Artwork</button>
-      </form>
-
-      <!-- Artworks List Preview (showing immediately after upload) -->
-      <div id="uploaded-artworks-list" style="margin-top: 2rem;"></div>
-    </section>
-
-    <button id="final-upload-btn" class="btn-wide final-upload-btn" type="button">Upload Collection</button>
   </main>
 
   <footer>
     This is a modal website of Union's marketplace and holds no on-chain activity. $nU is a faucet that holds no value and this is just for entertainment purposes.
   </footer>
 
-  <!-- Supabase JS (CDN) loaded BEFORE create.js -->
+  <!-- Supabase JS CDN + Main Script -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"></script>
   <script src="create.js"></script>
 </body>
