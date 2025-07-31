@@ -101,7 +101,7 @@ document.getElementById('final-upload-btn').onclick = async function () {
   }
 
   alert('Collection and artworks uploaded successfully!');
-  window.location.href = 'index.html';
+window.location.href = `collection.html?id=${collectionId}`;
 };
 
 window.onload = function () {
