@@ -17,6 +17,8 @@ function claimFaucet() {
 
 // --- On Load ---
 window.onload = function () {
+  preloadImages();
+
   const user = localStorage.getItem("unionUser");
   const balance = localStorage.getItem("nuBalance");
   const theme = localStorage.getItem("theme");
@@ -33,6 +35,21 @@ window.onload = function () {
 
   document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
 };
+
+// --- Preload All NFT Images ---
+function preloadImages() {
+  const images = [];
+
+  for (let i = 1; i <= 22; i++) {
+    images.push(`zkgf${i}.png`);
+    images.push(`art${i}.png`);
+  }
+
+  images.forEach((src) => {
+    const img = new Image();
+    img.src = src;
+  });
+}
 
 // --- Show Main Site + PFP Fetch ---
 function showMainSite(username) {
@@ -136,7 +153,6 @@ function mintNFT(img, name, desc) {
   triggerConfetti();
   downloadImage(img, name);
 
-  // Share on X!
   document.getElementById("share-btn").onclick = function () {
     const text = encodeURIComponent(`I just minted “${name}” on the Union Artworks Marketplace 🧪\n\nPowered by ZK. Backed by the Union.\n\n🧩`);
     const url = encodeURIComponent("https://union-marketplace.vercel.app");
@@ -207,4 +223,4 @@ if (!window.confetti) {
   const script = document.createElement("script");
   script.src = "https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js";
   document.head.appendChild(script);
-}
+    }
