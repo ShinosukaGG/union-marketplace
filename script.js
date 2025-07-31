@@ -9,7 +9,6 @@ function claimFaucet() {
   localStorage.setItem("unionUser", username);
   localStorage.setItem("nuBalance", "1.00");
 
-  // Save theme before reload
   const theme = document.body.classList.contains("light-mode") ? "light" : "dark";
   localStorage.setItem("theme", theme);
 
@@ -35,17 +34,16 @@ window.onload = function () {
   document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
 };
 
-// --- Show Main Site + PFP ---
+// --- Show Main Site + PFP Fetch ---
 function showMainSite(username) {
   document.getElementById("faucet-screen").style.display = "none";
   document.getElementById("main-site").style.display = "block";
 
-  // Set Twitter PFP via Unavatar
-  const pfpUrl = `https://unavatar.io/twitter/${username}`;
+  const pfpUrl = `https://unavatar.io/twitter/${username.replace(/^@/, "")}`;
   const pfpImg = document.getElementById("twitter-pfp");
   pfpImg.src = pfpUrl;
   pfpImg.onerror = () => {
-    pfpImg.src = "pfp.png"; // fallback if user not found
+    pfpImg.src = "pfp.png";
   };
 }
 
@@ -78,8 +76,8 @@ function openCollection(type) {
   header.innerHTML = `
     <h2>${isZKGF ? "ZKGFs" : "Union Yapybara"}</h2>
     <p>${isZKGF
-      ? "This is a collection of ZKGFs unlocked by the Union Community, Secure your ZKGF today!"
-      : "This is a collection of all the Union Yapybara artworks made by me, Secure your favourite piece now!"}</p>
+      ? "This is a collection of ZKGFs unlocked by the Union Community. Secure your ZKGF today!"
+      : "This is a collection of all the Union Yapybara artworks made by me. Secure your favourite piece now!"}</p>
     <hr style="margin: 1rem 0; border: 1px solid #A9ECFD;">
   `;
 
@@ -118,7 +116,7 @@ function closeModal() {
   document.getElementById("collection-modal").classList.add("hidden");
 }
 
-// --- Mint Logic ---
+// --- Mint NFT ---
 function mintNFT(img, name, desc) {
   const current = parseFloat(localStorage.getItem("nuBalance"));
   if (current < 0.01) {
@@ -133,11 +131,18 @@ function mintNFT(img, name, desc) {
   document.getElementById("minted-img").src = img;
   document.getElementById("minted-name").textContent = name;
   document.getElementById("minted-desc").textContent = desc;
-
   document.getElementById("mint-modal").classList.remove("hidden");
 
   triggerConfetti();
   downloadImage(img, name);
+
+  // Share on X!
+  document.getElementById("share-btn").onclick = function () {
+    const text = encodeURIComponent(`I just minted “${name}” on the Union Artworks Marketplace 🧪\n\nPowered by ZK. Backed by the Union.\n\n🧩`);
+    const url = encodeURIComponent("https://union-marketplace.vercel.app");
+    const tweetURL = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+    window.open(tweetURL, "_blank");
+  };
 }
 
 function closeMintModal() {
@@ -172,7 +177,7 @@ function triggerConfetti() {
   }, 2000);
 }
 
-// --- Image Download ---
+// --- Download Minted Image ---
 function downloadImage(src, filename) {
   const image = new Image();
   image.crossOrigin = "anonymous";
@@ -197,7 +202,7 @@ function downloadImage(src, filename) {
   };
 }
 
-// Load confetti library if not already
+// --- Load Confetti Library ---
 if (!window.confetti) {
   const script = document.createElement("script");
   script.src = "https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js";
