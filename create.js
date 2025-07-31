@@ -1,20 +1,16 @@
-// Import Supabase JS (if using as module, otherwise load via <script> CDN in HTML)
-import { createClient } from '@supabase/supabase-js'
+// NO import statement for CDN! Use the CDN script in your HTML above.
 
 const SUPABASE_URL = "https://bgoinnfdoxlnktkswzpi.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJnb2lubmZkb3hsbmt0a3N3enBpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM5Njg4MzEsImV4cCI6MjA2OTU0NDgzMX0.dWltf8vuwrB7-54fdFq-xwAqtGjV769ywuLxF4f3EDE";
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// Artwork array in memory
 let artworks = [];
 
-// --- On page load, reset state and render artwork list
 window.onload = function () {
   artworks = [];
   renderArtworksList();
 };
 
-// --- Handle single artwork upload form ---
 document.getElementById('artwork-form').onsubmit = function (e) {
   e.preventDefault();
 
@@ -28,24 +24,20 @@ document.getElementById('artwork-form').onsubmit = function (e) {
   }
 
   const file = imageInput.files[0];
-  // Save in memory (not uploaded yet)
   artworks.push({
     file,
     name: artworkName,
     price: artworkPrice,
-    url: '', // Will be filled after upload
+    url: '',
   });
 
-  // Immediately show in list
   renderArtworksList();
 
-  // Reset form
   imageInput.value = '';
   document.getElementById('artwork-name').value = '';
   document.getElementById('artwork-price').value = '';
 };
 
-// --- Renders the in-memory artwork list above the Upload Collection btn ---
 function renderArtworksList() {
   const container = document.getElementById('uploaded-artworks-list');
   if (!container) return;
@@ -62,7 +54,6 @@ function renderArtworksList() {
   ).join('');
 }
 
-// --- Handle Upload Collection ---
 document.getElementById('final-upload-btn').addEventListener("click", async function () {
   const name = document.getElementById('collection-name').value.trim();
   const desc = document.getElementById('collection-desc').value.trim();
@@ -76,7 +67,7 @@ document.getElementById('final-upload-btn').addEventListener("click", async func
     return;
   }
 
-  // 1. Create collection
+  // 1. Create collection in Supabase
   let collectionId = null;
   const { data, error } = await supabase
     .from('collections')
@@ -90,7 +81,7 @@ document.getElementById('final-upload-btn').addEventListener("click", async func
   }
   collectionId = data.id;
 
-  // 2. Upload each artwork image and metadata
+  // 2. Upload artworks
   for (let a of artworks) {
     const filePath = `${collectionId}/${Date.now()}_${a.file.name}`;
     const { data: storageData, error: storageError } = await supabase
@@ -103,14 +94,13 @@ document.getElementById('final-upload-btn').addEventListener("click", async func
       return;
     }
 
-    // Get public URL for the artwork
+    // Get public URL
     const { data: publicUrlData } = supabase
       .storage
       .from('nft-collections')
       .getPublicUrl(filePath);
     const imageUrl = publicUrlData.publicUrl;
 
-    // Insert NFT record
     await supabase.from('nfts').insert([{
       collection_id: collectionId,
       name: a.name,
