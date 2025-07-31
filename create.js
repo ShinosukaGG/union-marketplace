@@ -48,7 +48,7 @@ function renderArtworksList() {
   ).join('');
 }
 
-document.getElementById('final-upload-btn').onclick = async function () {
+document.getElementById('final-upload-btn').addEventListener("click", async function () {
   const name = document.getElementById('collection-name').value.trim();
   const desc = document.getElementById('collection-desc').value.trim();
 
