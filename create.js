@@ -32,7 +32,7 @@ document.getElementById("upload-btn").addEventListener("click", async () => {
   }
 
   const uuid = insertData.id;
-  const filePath = `artworks/${uuid}_${file.name}`;
+  const filePath = `${uuid}_${file.name}`;
 
   // STEP 2: Upload image to storage bucket
   const { error: uploadError } = await supabase.storage
