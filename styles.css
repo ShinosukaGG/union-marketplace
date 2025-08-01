@@ -1,295 +1,316 @@
+/* Brand Kit Variables */
 :root {
-  --union-black: #111217;
-  --union-white: #fafafa;
-  --union-gray: #292933;
-  --union-primary: #33ffe2;
-  --union-accent: #009387;
-  --union-bg: #17171b;
-  --union-txt: #e6e6e7;
-  --union-btn: #33ffe2;
-  --union-btn-text: #181b1d;
-  --union-error: #fa4969;
-  --font-main: 'Inter', 'Poppins', 'Segoe UI', Arial, sans-serif;
+  --union-black: #000000;
+  --union-blue: #A9ECFD;
+  --union-white: #ffffff;
+  --union-bg: #000000;
+  --union-accent: #A9ECFD;
+  --font-mono: 'JetBrains Mono', 'Fira Mono', 'Consolas', monospace;
+  --font-super: 'Supermolot', 'Arial Black', Arial, sans-serif;
 }
 
+/* Fonts */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: local('JetBrains Mono'), url('https://fonts.cdnfonts.com/s/19282/JetBrainsMono-Regular.woff') format('woff');
+}
+@font-face {
+  font-family: 'Supermolot';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Supermolot'), url('https://fonts.cdnfonts.com/s/17256/Supermolot.woff') format('woff');
+}
+
+/* Global styles */
 html, body {
+  background: var(--union-bg);
+  color: var(--union-blue);
+  font-family: var(--font-mono);
   margin: 0;
   padding: 0;
-  background: var(--union-bg);
-  color: var(--union-txt);
-  font-family: var(--font-main);
   min-height: 100vh;
 }
 
-body.dark-mode {
-  background: var(--union-bg);
-  color: var(--union-txt);
+a {
+  color: var(--union-blue);
+  text-decoration: underline;
 }
-body {
-  font-size: 1rem;
+a:hover {
+  color: var(--union-white);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-super), 'Arial Black', Arial, sans-serif;
+  color: var(--union-blue);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin: 0 0 16px 0;
 }
 
 /* Header */
 .header {
-  width: 100%;
-  background: var(--union-black);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 0 18px 0;
-  border-bottom: 1.5px solid var(--union-gray);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-.header .left, .header .center, .header .right {
-  display: flex;
-  align-items: center;
+  padding: 28px 0 16px 0;
+  background: var(--union-black);
+  border-bottom: 2px solid var(--union-blue);
 }
 .header .left {
-  margin-left: 2.3rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: 32px;
 }
 .header .logo {
-  width: 38px;
   height: 38px;
-  margin-right: 12px;
+  width: 38px;
 }
 .header h1 {
-  font-family: var(--font-main);
-  letter-spacing: 0.12em;
-  font-size: 1.7rem;
-  color: var(--union-primary);
-  font-weight: bold;
-  margin: 0;
-  margin-right: 8px;
+  font-family: var(--font-super), 'Arial Black', Arial, sans-serif;
+  color: var(--union-blue);
+  font-size: 2.1rem;
+  font-weight: 700;
+  margin: 0 0 0 8px;
+  letter-spacing: 0.10em;
 }
 .header .center {
   flex: 1;
-  justify-content: center;
+  text-align: center;
 }
 .header h2 {
-  font-family: var(--font-main);
-  font-size: 1.3rem;
+  font-family: var(--font-super), 'Arial Black', Arial, sans-serif;
   color: var(--union-white);
+  font-size: 1.3rem;
   font-weight: 600;
   margin: 0;
 }
 .header .right {
-  margin-right: 2.2rem;
+  margin-right: 32px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 #dark-mode-toggle {
-  background: var(--union-gray);
-  color: var(--union-white);
+  background: var(--union-blue);
+  color: var(--union-black);
   border: none;
-  font-size: 1.2rem;
-  border-radius: 1rem;
-  padding: 6px 16px;
+  font-family: var(--font-super), 'Arial Black', Arial, sans-serif;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 5px 18px;
+  font-size: 1.1rem;
+  letter-spacing: 0.03em;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.13s, color 0.13s;
 }
 #dark-mode-toggle:hover {
-  background: var(--union-primary);
-  color: var(--union-btn-text);
+  background: var(--union-white);
+  color: var(--union-black);
 }
 
-/* Main Container */
+/* Main Layout (All Pages) */
 .container {
-  max-width: 490px;
-  margin: 2.5rem auto 0 auto;
-  background: var(--union-gray);
-  border-radius: 1.4rem;
-  box-shadow: 0 8px 32px #0000002e;
-  padding: 2.4rem 2.3rem 2.2rem 2.3rem;
+  max-width: 530px;
+  margin: 3.5rem auto 0 auto;
+  padding: 2.5rem 2.2rem 2.1rem 2.2rem;
+  background: var(--union-black);
+  border-radius: 1.3rem;
+  border: 2.5px solid var(--union-blue);
+  box-sizing: border-box;
 }
-
-@media (max-width: 600px) {
+@media (max-width: 700px) {
   .container {
-    margin: 1.2rem 0 0 0;
-    padding: 1.2rem 0.7rem 1.1rem 0.7rem;
+    margin: 1.1rem 0 0 0;
+    padding: 1.1rem 0.5rem 1.1rem 0.5rem;
     border-radius: 1.1rem;
     min-width: 0;
   }
-  .header .left, .header .right {
-    margin-left: 0.8rem;
-    margin-right: 0.8rem;
-  }
+  .header .left, .header .right { margin-left: 8px; margin-right: 8px; }
 }
 
-/* Form Styles (create.html) */
-.form-box {
+/* Buttons */
+button, .btn {
+  width: 100%;
+  padding: 1.1rem 0;
+  margin: 0.7rem 0 0.3rem 0;
+  border: none;
+  border-radius: 0.7rem;
+  background: var(--union-blue);
+  color: var(--union-black);
+  font-family: var(--font-super), 'Arial Black', Arial, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: background 0.14s, color 0.14s;
+  box-sizing: border-box;
+}
+button:hover, .btn:hover {
+  background: var(--union-white);
+  color: var(--union-black);
+}
+
+/* Index: NFT Cards, Search, Collection Boxes */
+.search-row {
+  width: 100%;
+  display: flex;
+  margin-bottom: 1.9rem;
+  gap: 0.6rem;
+}
+.search-row input[type="text"] {
+  flex: 1;
+  border: 2px solid var(--union-blue);
+  border-radius: 0.5rem;
   background: var(--union-black);
-  border-radius: 1rem;
-  box-shadow: 0 4px 18px #0000002b;
-  padding: 2rem 1.4rem;
-  margin: 0 auto;
+  color: var(--union-blue);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  padding: 0.8rem 1.2rem;
+  margin-right: 0.3rem;
+}
+.search-row button {
+  flex: 0 0 auto;
+  padding: 0.8rem 1.7rem;
+  min-width: 122px;
+}
+
+/* Collection/Artwork Box */
+.collection-box, .artwork-box, .form-box {
+  background: var(--union-black);
+  border-radius: 1.12rem;
+  border: 2px solid var(--union-blue);
+  padding: 2.1rem 1.6rem 1.6rem 1.6rem;
+  margin-bottom: 2.1rem;
+}
+.collection-box h2, .artwork-box h2, .form-box h2 {
+  font-family: var(--font-super), 'Arial Black', Arial, sans-serif;
+  color: var(--union-blue);
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.7rem;
+}
+.collection-box p, .artwork-box p, .form-box p {
+  color: var(--union-blue);
+  font-size: 1rem;
+  font-family: var(--font-mono);
+}
+.collection-box img, .artwork-img {
+  width: 100%;
+  max-width: 320px;
+  max-height: 320px;
+  object-fit: contain;
+  display: block;
+  border-radius: 0.7rem;
+  border: 2px solid var(--union-blue);
+  margin: 0 auto 1.2rem auto;
+  background: var(--union-black);
+}
+
+/* --- FORM (create.html) --- */
+.form-box {
   display: flex;
   flex-direction: column;
-  gap: 1.35rem;
+  gap: 1.1rem;
 }
 .form-box label {
+  font-family: var(--font-super), 'Arial Black', Arial, sans-serif;
   font-size: 1.04rem;
-  font-weight: 600;
-  margin-bottom: 0.36rem;
-  color: var(--union-primary);
+  font-weight: 700;
+  color: var(--union-blue);
+  margin-bottom: 0.29rem;
+  margin-top: 0.25rem;
 }
 .form-box input[type="text"],
-.form-box input[type="number"],
-.form-box input[type="file"] {
-  border: 1.5px solid var(--union-primary);
-  border-radius: 0.65rem;
-  padding: 0.75rem 1rem;
-  margin-bottom: 0.1rem;
-  background: var(--union-gray);
-  color: var(--union-white);
-  font-size: 1rem;
-  outline: none;
-  transition: border 0.2s;
-  font-family: var(--font-main);
-}
-.form-box input[type="file"] {
-  border: none;
-  padding: 0.4rem 0.2rem;
-  background: none;
-}
-.form-box input:focus {
-  border: 1.5px solid var(--union-accent);
-}
-.form-box button,
-#upload-artwork-btn, #mint-btn, #share-btn {
-  width: 100%;
-  padding: 0.9rem 0;
-  margin-top: 0.55rem;
-  border: none;
-  border-radius: 0.85rem;
-  background: linear-gradient(90deg, var(--union-primary), var(--union-accent));
-  color: var(--union-btn-text);
-  font-size: 1.15rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  box-shadow: 0 4px 10px #0ff8e317;
-  cursor: pointer;
-  transition: background 0.2s, box-shadow 0.2s;
-}
-.form-box button:hover,
-#upload-artwork-btn:hover, #mint-btn:hover, #share-btn:hover {
-  background: var(--union-btn);
-  color: #232425;
-  box-shadow: 0 6px 14px #0ff8e32c;
-}
-#upload-status {
-  color: var(--union-primary);
-  text-align: center;
-  font-weight: bold;
-  margin-top: 1rem;
-}
-
-.artwork-box {
+.form-box input[type="number"] {
+  border: 2px solid var(--union-blue);
+  border-radius: 0.7rem;
+  padding: 0.7rem 1rem;
   background: var(--union-black);
-  border-radius: 1.3rem;
-  box-shadow: 0 6px 28px #00000025;
-  padding: 2.2rem 1.2rem 1.6rem 1.2rem;
-  margin: 0 auto;
-  text-align: center;
+  color: var(--union-blue);
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  margin-bottom: 0.27rem;
+  transition: border 0.12s;
 }
-.artwork-img {
-  width: 100%;
-  max-width: 350px;
-  max-height: 340px;
-  border-radius: 1rem;
-  box-shadow: 0 6px 16px #00000019;
-  margin-bottom: 1.4rem;
-  background: #181921;
-  object-fit: contain;
+.form-box input[type="text"]:focus,
+.form-box input[type="number"]:focus {
+  border: 2px solid var(--union-white);
+}
+.form-box input[type="file"] {
+  margin-top: 0.17rem;
+  color: var(--union-blue);
+  border: none;
+  background: none;
+  font-family: var(--font-mono);
+}
+.form-box input[type="file"]::-webkit-file-upload-button {
+  background: var(--union-blue);
+  color: var(--union-black);
+  border: none;
+  font-family: var(--font-super), 'Arial Black', Arial, sans-serif;
+  font-weight: 700;
+  border-radius: 0.5rem;
+  padding: 0.6rem 1.1rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.form-box button {
+  margin-top: 1.1rem;
 }
 
+/* --- ARTWORK (artwork.html) --- */
 .artwork-box h2 {
-  font-size: 1.28rem;
-  color: var(--union-primary);
-  margin-bottom: 0.8rem;
-  margin-top: 0.5rem;
-  font-weight: 700;
+  margin-top: 0.6rem;
+  font-size: 1.35rem;
+  color: var(--union-blue);
 }
 .artwork-box p {
-  font-size: 1.08rem;
-  color: var(--union-txt);
   margin-bottom: 1.4rem;
-  margin-top: 0;
-  font-weight: 400;
+  color: var(--union-blue);
+  font-size: 1.07rem;
 }
-.artwork-box strong {
-  color: var(--union-accent);
-}
-.artwork-buttons {
-  display: flex;
-  flex-direction: row;
-  gap: 0.75rem;
+.artwork-img {
+  margin-bottom: 1.3rem;
   margin-top: 0.5rem;
-  justify-content: center;
 }
-#mint-btn, #share-btn {
-  flex: 1;
-  padding: 0.75rem 0;
-  border-radius: 0.75rem;
-  font-size: 1.1rem;
-  background: linear-gradient(90deg, var(--union-primary), var(--union-accent));
-  color: var(--union-btn-text);
-  font-weight: 600;
-  box-shadow: 0 4px 10px #0ff8e317;
-  border: none;
-  cursor: pointer;
-  transition: background 0.17s;
-  margin-bottom: 0.5rem;
-  text-decoration: none;
+
+/* Error state */
+#error-msg, #not-found {
+  color: var(--union-accent);
+  background: var(--union-black);
+  padding: 1.1rem;
+  border-radius: 0.7rem;
+  border: 2px solid var(--union-accent);
   text-align: center;
-}
-#mint-btn:hover, #share-btn:hover {
-  background: var(--union-btn);
-  color: #222;
-}
-#not-found {
-  display: none;
-  text-align: center;
-  padding: 2rem 0;
-}
-#not-found h3 {
-  color: var(--union-error);
-  margin-top: 1.5rem;
-  font-size: 1.2rem;
-  letter-spacing: 0.05em;
-}
-#not-found:not(.hidden) {
-  display: block;
-}
-.hidden {
-  display: none !important;
+  margin-top: 1.4rem;
+  margin-bottom: 1rem;
+  font-family: var(--font-mono);
+  font-size: 1.09rem;
 }
 
 /* Footer */
 .footer {
   width: 100%;
   padding: 1.2rem 0 1.1rem 0;
-  color: var(--union-gray);
+  color: var(--union-blue);
   background: transparent;
   text-align: center;
-  font-size: 1rem;
+  font-size: 0.98rem;
+  font-family: var(--font-mono);
   font-weight: 400;
   letter-spacing: 0.01em;
   margin-top: 2.6rem;
 }
-@media (max-width: 600px) {
-  .footer {
-    padding: 0.7rem 0 1rem 0;
-    font-size: 0.97rem;
-    margin-top: 1.7rem;
-  }
-}
 
-/* Misc */
+/* Scrollbar for dark mode */
 ::-webkit-scrollbar {
   width: 9px;
   background: var(--union-black);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--union-gray);
+  background: var(--union-blue);
   border-radius: 8px;
-    }
+}
