@@ -7,16 +7,17 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div id="faucet-screen" class="center-screen">
-    <div class="page-content">
-      <div class="faucet-box">
-        <h2>Faucet $nU to start minting your favourite NFTs now!</h2>
-        <label for="username">Enter your username to begin:</label>
-        <input type="text" id="username" placeholder="e.g. shinosuka_eth" />
-        <button onclick="claimFaucet()">Faucet $nU</button>
-      </div>
-    </div>
-  </div>
+<div class="faucet-box">
+  <h2>Faucet $nU to start minting your favourite NFTs now!</h2>
+  <label for="username" style="display:block; margin-bottom:0.5rem;">Enter your username to begin:</label>
+  <input type="text" id="username" placeholder="e.g. shinosuka_eth" style="margin-bottom:1.2rem;"/>
+  <button 
+    id="faucet-btn" 
+    class="btn-wide"
+    style="width:100%;padding:1rem 0;font-size:1.11rem;font-family:var(--union-font-header);font-weight:bold;"
+    onclick="claimFaucet()"
+  >Faucet $nU</button>
+</div>
 
   <div id="main-site" style="display: none">
     <header class="site-header">
