@@ -1,44 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Upload NFT - Union Artworks Marketplace</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <title>Create Artwork | Union Artworks Marketplace</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body class="dark-mode">
-  <header class="header">
+<body>
+  <!-- HEADER -->
+  <div class="site-header">
     <div class="left">
-      <img src="badge3.png" alt="Union Logo" class="logo" />
-      <h1>UNION</h1>
+      <img src="badge3.png" alt="Union Logo" class="logo">
+      <span class="union-text">UNION</span>
     </div>
     <div class="center">
-      <h2>Upload NFT</h2>
+      Union Artworks Marketplace
     </div>
     <div class="right">
-      <button id="dark-mode-toggle">☀️ / 🌙</button>
+      <!-- You can add balance or pfp here if needed -->
+      <button id="theme-toggle" title="Toggle theme">🌓</button>
     </div>
-  </header>
+  </div>
 
-  <main class="container">
-    <div class="form-box">
-      <label for="artwork-name">Collection / Artwork Name</label>
-      <input type="text" id="artwork-name" placeholder="e.g. Genesis Capybara" />
+  <!-- MAIN CONTENT -->
+  <main>
+    <div class="create-main">
+      <div class="create-title">Upload NFT Artwork</div>
+      <form id="artwork-form" class="artwork-form" autocomplete="off">
+        <label for="artworkName">Artwork Name</label>
+        <input type="text" id="artworkName" name="artworkName" maxlength="60" required autocomplete="off">
 
-      <label for="artwork-price">Price in $nU</label>
-      <input type="number" id="artwork-price" placeholder="e.g. 0.01" step="0.01" />
+        <label for="artworkDesc">Description</label>
+        <input type="text" id="artworkDesc" name="artworkDesc" maxlength="120" required autocomplete="off">
 
-      <label for="artwork-file">Upload Artwork Image (.png or .jpg)</label>
-      <input type="file" id="artwork-file" accept=".png, .jpg, .jpeg" />
+        <label for="artworkPrice">Price in $nU</label>
+        <input type="number" id="artworkPrice" name="artworkPrice" min="0" step="0.01" required>
 
-      <button id="upload-artwork-btn">Upload Artwork</button>
+        <label for="artworkImage">Upload Artwork Image (.png or .jpg)</label>
+        <input type="file" id="artworkImage" name="artworkImage" accept="image/png, image/jpeg" required>
+
+        <button type="submit" id="upload-btn">Upload NFT</button>
+      </form>
+      <div id="uploaded-artworks-list" class="uploaded-artworks-list"></div>
     </div>
   </main>
 
-  <footer class="footer">
-    <p>This is a modal website of Union's marketplace. No on-chain activity. $nU is a faucet token.</p>
+  <footer>
+    This is a modal website of Union's marketplace. No on-chain activity. $nU is a faucet token.
   </footer>
-
-  <script type="module" src="create.js"></script>
+  
+  <script src="create.js"></script>
 </body>
 </html>
