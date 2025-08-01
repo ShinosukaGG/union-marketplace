@@ -6,13 +6,13 @@ const supabase = createClient(
 );
 
 document.getElementById('upload-artwork-btn').addEventListener('click', async () => {
-  const name = document.getElementById('artwork-name').value;
+  const name = document.getElementById('artwork-name').value.trim();
   const price = parseFloat(document.getElementById('artwork-price').value);
   const fileInput = document.getElementById('artwork-file');
   const file = fileInput.files[0];
 
   if (!name || !price || !file) {
-    alert('Please provide all fields.');
+    alert('Please fill in all fields and upload an image.');
     return;
   }
 
@@ -20,21 +20,33 @@ document.getElementById('upload-artwork-btn').addEventListener('click', async ()
   const uuid = crypto.randomUUID();
   const filePath = `${uuid}.${fileExt}`;
 
-  // Upload to storage
+  // Upload file to bucket
   const { error: uploadError } = await supabase.storage
     .from('nft-artworks')
     .upload(filePath, file);
 
   if (uploadError) {
     console.error('Storage upload error:', uploadError.message);
-    alert('Failed to upload image to storage.');
+    alert('❌ Failed to upload image to storage.');
     return;
   }
 
-  const imageUrl = `https://bgoinnfdoxlnktkswzpi.supabase.co/storage/v1/object/public/nft-artworks/${filePath}`;
+  // Get public URL of the uploaded image
+  const { data: publicUrlData, error: urlError } = supabase
+    .storage
+    .from('nft-artworks')
+    .getPublicUrl(filePath);
 
-  // Insert into nfts table
-  const { data, error: insertError } = await supabase
+  if (urlError || !publicUrlData?.publicUrl) {
+    console.error('URL generation error:', urlError?.message);
+    alert('❌ Failed to get public image URL.');
+    return;
+  }
+
+  const imageUrl = publicUrlData.publicUrl;
+
+  // Insert metadata into table
+  const { error: insertError } = await supabase
     .from('nfts')
     .insert([
       {
@@ -47,10 +59,10 @@ document.getElementById('upload-artwork-btn').addEventListener('click', async ()
 
   if (insertError) {
     console.error('Insert error:', insertError.message);
-    alert('Failed to save NFT metadata.');
+    alert('❌ Failed to save NFT metadata.');
     return;
   }
 
-  alert('Artwork successfully uploaded!');
+  alert('✅ Artwork successfully uploaded!');
   window.location.href = `/${uuid}`;
 });
