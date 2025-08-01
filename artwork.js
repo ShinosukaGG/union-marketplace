@@ -5,49 +5,73 @@ const supabase = createClient(
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJnb2lubmZkb3hsbmt0a3N3enBpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM5Njg4MzEsImV4cCI6MjA2OTU0NDgzMX0.dWltf8vuwrB7-54fdFq-xwAqtGjV769ywuLxF4f3EDE'
 );
 
-// 1. Extract the uuid from the URL path (e.g. /09ff95d1-xxxx-xxxx-xxxx-xxxxxxxxxxxx)
-const pathUuid = window.location.pathname.replace('/', '');
+// Get UUID from URL (/uuid)
+const uuid = window.location.pathname.replace('/', '').split('?')[0];
+
+const nameDiv = document.getElementById('artwork-name');
+const descDiv = document.getElementById('artwork-desc');
+const imgEl = document.getElementById('artwork-image');
+const mintBtn = document.getElementById('mint-btn');
+const shareBtn = document.getElementById('share-x-btn');
+const artworkBox = document.getElementById('artwork-box');
+
+// Hide not found message by default
+if (document.getElementById('not-found')) document.getElementById('not-found').style.display = 'none';
 
 async function loadArtwork() {
-  // 2. Fetch NFT metadata from table
-  const { data: nfts, error: nftError } = await supabase
+  // Fetch NFT by ID
+  let { data, error } = await supabase
     .from('nfts')
     .select('*')
-    .eq('id', pathUuid)
-    .maybeSingle();
+    .eq('id', uuid)
+    .limit(1)
+    .single();
 
-  if (nftError || !nfts) {
-    document.getElementById('nft-display').style.display = "none";
-    document.getElementById('not-found').classList.remove("hidden");
+  if (error || !data) {
+    nameDiv.textContent = "Artwork Not Found";
+    descDiv.textContent = "";
+    imgEl.style.display = "none";
+    mintBtn.style.display = "none";
+    shareBtn.style.display = "none";
     return;
   }
 
-  // 3. List all files in the bucket root and find one with the uuid as filename prefix
-  const { data: files, error: fileError } = await supabase
-    .storage
-    .from('nft-artworks')
-    .list('', { limit: 1000 });
+  // Set metadata
+  nameDiv.textContent = data.name || "No Name";
+  descDiv.textContent = data.description || "";
 
-  let artworkFile;
-  if (files && Array.isArray(files)) {
-    artworkFile = files.find(file => file.name.startsWith(pathUuid));
-  }
-  if (!artworkFile) {
-    document.getElementById('nft-display').style.display = "none";
-    document.getElementById('not-found').classList.remove("hidden");
-    return;
-  }
-  // 4. Construct the image URL
-  const imageUrl = `https://bgoinnfdoxlnktkswzpi.supabase.co/storage/v1/object/public/nft-artworks/${artworkFile.name}`;
+  // Try png then jpg
+  let ext = 'png';
+  let imageUrl = `https://bgoinnfdoxlnktkswzpi.supabase.co/storage/v1/object/public/nft-artworks/${uuid}.png`;
 
-  // 5. Fill in the page
-  document.getElementById('artwork-img').src = imageUrl;
-  document.getElementById('artwork-img').alt = nfts.name || 'NFT artwork';
-  document.getElementById('artwork-name').textContent = nfts.name || 'Unnamed Artwork';
-  document.getElementById('artwork-price').textContent = nfts.price || '0';
+  // Test if the PNG exists by trying to load it
+  imgEl.onerror = async function() {
+    // Try jpg as fallback
+    if (ext === 'png') {
+      ext = 'jpg';
+      imgEl.src = `https://bgoinnfdoxlnktkswzpi.supabase.co/storage/v1/object/public/nft-artworks/${uuid}.jpg`;
+    } else {
+      imgEl.src = 'https://placehold.co/300x300?text=Not+Found';
+    }
+  };
+  imgEl.src = imageUrl;
 
-  document.getElementById('nft-display').style.display = "";
-  document.getElementById('not-found').classList.add("hidden");
+  // Mint button text (with price)
+  mintBtn.textContent = `Mint - ${data.price ? data.price : "?"} $nU`;
+
+  // Mint button (placeholder)
+  mintBtn.onclick = () => alert('Minting is disabled on this test site.');
+
+  // Share on X button logic
+  shareBtn.onclick = () => {
+    const tweetText = encodeURIComponent(
+      `Check out "${data.name}" on the Union Artworks Marketplace!\n\nunion-marketplace.vercel.app/${uuid}`
+    );
+    window.open(
+      `https://twitter.com/intent/tweet?text=${tweetText}`,
+      '_blank'
+    );
+  };
 }
 
 loadArtwork();
