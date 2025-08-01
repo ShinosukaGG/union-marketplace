@@ -442,42 +442,6 @@ footer {
   color: #eee;
 }
 
-#mint-btn {
-  background: var(--blue);
-  color: #000;
-  font-family: var(--font-header);
-  font-size: 1rem;
-  padding: 0.8rem 1.2rem;
-  border: none;
-  border-radius: 7px;
-  font-weight: bold;
-  margin-bottom: 1.1rem;
-  width: 100%;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-#mint-btn:hover {
-  background: #76e1ff;
-}
-
-#share-x-btn {
-  background: none;
-  border: 1.5px solid var(--blue);
-  color: var(--blue);
-  font-size: 1rem;
-  border-radius: 7px;
-  padding: 0.7rem 1.2rem;
-  font-family: var(--font-body);
-  width: 100%;
-  cursor: pointer;
-  transition: background 0.16s, color 0.16s;
-  margin-bottom: 0.7rem;
-}
-#share-x-btn:hover {
-  background: var(--blue);
-  color: #111;
-}
-
 /* Responsive for artwork */
 @media (max-width: 600px) {
   .artwork-box {
@@ -519,65 +483,6 @@ footer {
   align-items: center;
 }
 
-.faucet-dynamic-box {
-  background: #181b20;
-  border: 4px solid var(--union-blue);
-  border-radius: 16px;
-  box-shadow: 0 6px 40px #0007;
-  max-width: 430px;
-  margin: 0 auto;
-  padding: 2.4rem 2rem 2.1rem 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: center;
-}
-.faucet-dynamic-box h2 {
-  font-family: var(--union-font-header);
-  font-size: 1.25rem;
-  color: var(--union-blue);
-  text-align: center;
-  margin-bottom: 1.5rem;
-  font-weight: bold;
-}
-.faucet-label {
-  color: var(--union-blue);
-  font-family: var(--union-font-mono);
-  font-size: 1.04rem;
-  margin-bottom: 0.6rem;
-}
-.faucet-input {
-  padding: 0.85rem 1.1rem;
-  font-size: 1.08rem;
-  font-family: var(--union-font-mono);
-  background: #23272e;
-  color: var(--union-blue);
-  border: 2.5px solid var(--union-blue);
-  border-radius: 8px;
-  margin-bottom: 1.3rem;
-  outline: none;
-  transition: border 0.17s, box-shadow 0.18s;
-}
-.faucet-input:focus {
-  border: 2.5px solid #53d3ff;
-  box-shadow: 0 0 0 2.5px #53d3ff44;
-}
-.faucet-btn {
-  width: 100%;
-  font-size: 1.11rem;
-  padding: 1.12rem 0;
-  border-radius: 9px;
-  font-family: var(--union-font-header);
-  margin-top: 0.2rem;
-  background: var(--union-blue);
-  color: #181b20;
-  border: none;
-}
-.faucet-btn:hover {
-  background: #d8f8ff;
-  color: #222;
-}
-
 @media (max-width: 700px) {
   .landing-main-box {
     max-width: 99vw;
@@ -608,4 +513,47 @@ footer {
   background: #d6f6ff;
   color: #181b20;
   box-shadow: 0 4px 32px #1115;
-  }
+}
+
+/* ================= FAUCET SCREEN CENTERING ================= */
+.center-screen {
+  min-height: 100vh;
+  min-width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--union-bg);
+  flex-direction: column;
+}
+
+/* ================= FAUCET BOX ================= */
+.faucet-dynamic-box {
+  background: #181b20;
+  border: 4px solid var(--union-blue);
+  border-radius: 16px;
+  box-shadow: 0 6px 40px #0007;
+  max-width: 430px;
+  margin: 0 auto;
+  padding: 2.4rem 2rem 2.1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+}
+.faucet-dynamic-box h2 {
+  font-family: var(--union-font-header);
+  font-size: 1.25rem;
+  color: var(--union-blue);
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+}
+.faucet-label {
+  color: var(--union-blue);
+  font-family: var(--union-font-mono);
+  font-size: 1.04rem;
+  margin-bottom: 0.6rem;
+}
+.faucet-input {
+  padding: 0.85rem 1.1rem;
+  font-size: 1.08
