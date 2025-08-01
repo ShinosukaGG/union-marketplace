@@ -10,30 +10,40 @@
   <!-- HEADER -->
   <div class="site-header">
     <div class="left">
-      <img src="union-logo.svg" alt="Union Logo" class="logo">
+      <img src="badge3.png" alt="Union Logo" class="logo">
       <span class="union-text">UNION</span>
     </div>
     <div class="center">
       Union Artworks Marketplace
     </div>
     <div class="right">
-      <!-- You can add balance or pfp here if needed -->
       <button id="theme-toggle" title="Toggle theme">🌓</button>
     </div>
   </div>
 
   <!-- MAIN CONTENT -->
   <main>
-    <div class="artwork-box" id="artwork-box">
-      <!-- Artwork info will be loaded here via JS -->
-      <div id="not-found" class="">Artwork not found</div>
+    <div class="artwork-box" id="artwork-box" style="margin: 3rem auto; max-width: 350px; background: #111; border: 2px solid var(--blue); border-radius: 12px; padding: 2.5rem 2rem; text-align: center;">
+      <!-- Image (fill by JS later) -->
+      <img id="artwork-image" src="https://placehold.co/300x300?text=Artwork" alt="Artwork Image" style="width:100%; max-width: 300px; border-radius: 10px; background: #222; margin-bottom: 1.5rem;">
+      <!-- Name -->
+      <div id="artwork-name" style="font-family: var(--font-header); font-size: 1.4rem; color: var(--blue); margin-bottom: 1rem;">Artwork Name</div>
+      <!-- Description -->
+      <div id="artwork-desc" style="margin-bottom: 2rem; font-size: 1.06rem; color: #eee;">Artwork description goes here.</div>
+      <!-- Mint Button -->
+      <button id="mint-btn" style="background: var(--blue); color: #000; font-family: var(--font-header); font-size: 1rem; padding: 0.8rem 1.2rem; border: none; border-radius: 7px; font-weight: bold; margin-bottom: 1.1rem; width:100%;">
+        Mint - 1 $nU
+      </button>
+      <br>
+      <!-- Share on X Button -->
+      <button id="share-x-btn" style="background: none; border: 1.5px solid var(--blue); color: var(--blue); font-size: 1rem; border-radius: 7px; padding: 0.7rem 1.2rem; font-family: var(--font-body); width:100%;">
+        Share on X
+      </button>
     </div>
   </main>
 
   <footer>
     This is a modal website of Union's marketplace. No on-chain activity. $nU is a faucet token.
   </footer>
-  
-  <script src="artwork.js"></script>
 </body>
 </html>
