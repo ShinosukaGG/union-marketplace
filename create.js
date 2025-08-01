@@ -31,34 +31,19 @@ document.getElementById('upload-artwork-btn').addEventListener('click', async ()
     return;
   }
 
-  // Get public URL of the uploaded image
-  const { data: publicUrlData, error: urlError } = supabase
-    .storage
-    .from('nft-artworks')
-    .getPublicUrl(filePath);
-
-  if (urlError || !publicUrlData?.publicUrl) {
-    console.error('URL generation error:', urlError?.message, publicUrlData);
-    alert('❌ Failed to get public image URL.');
-    return;
-  }
-
-  const imageUrl = publicUrlData.publicUrl;
-
-  // Insert metadata into table
+  // Insert metadata into table (no url)
   const { error: insertError } = await supabase
     .from('nfts')
     .insert([
       {
         id: uuid,
         name: name,
-        price: price,
-        url: imageUrl
+        price: price
       }
     ]);
 
   if (insertError) {
-    console.error('Insert error:', insertError);
+    console.error('Insert error:', insertError.message);
     alert('❌ Failed to save NFT metadata.');
     return;
   }
