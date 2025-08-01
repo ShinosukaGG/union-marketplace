@@ -8,11 +8,13 @@
 </head>
 <body>
   <div id="faucet-screen" class="center-screen">
-    <div class="faucet-box large-faucet-box">
-      <h2>Faucet $nU to start minting your favourite NFTs now!</h2>
-      <label for="username">Enter your username to begin:</label>
-      <input type="text" id="username" placeholder="e.g. shinosuka_eth" />
-      <button onclick="claimFaucet()">Faucet $nU</button>
+    <div class="page-content">
+      <div class="faucet-box">
+        <h2>Faucet $nU to start minting your favourite NFTs now!</h2>
+        <label for="username">Enter your username to begin:</label>
+        <input type="text" id="username" placeholder="e.g. shinosuka_eth" />
+        <button onclick="claimFaucet()">Faucet $nU</button>
+      </div>
     </div>
   </div>
 
@@ -33,34 +35,37 @@
       </div>
     </header>
 
-    <section class="hero-box"> 
-      <!-- Insert this right before the search box -->
-<a href="create.html" class="btn-wide" style="margin-bottom: 1.5rem;">
-  ➕ Create Your Own Collection
-</a>
-      <h1>Union Artworks Marketplace</h1>
-      <div class="search-section large-search">
-        <input type="text" placeholder="Search..." />
-        <button>Search</button>
-      </div>
-    </section>
+    <main>
+      <div class="page-content">
+        <section class="hero-box"> 
+          <a href="create.html" class="btn-wide" style="margin-bottom: 1.5rem;">
+            ➕ Create Your Own Collection
+          </a>
+          <h1>Union Artworks Marketplace</h1>
+          <div class="search-section large-search">
+            <input type="text" placeholder="Search..." />
+            <button>Search</button>
+          </div>
+        </section>
 
-    <section class="collections">
-      <div class="collection-box large-collection">
-        <img src="zkgf.png" class="collection-banner" />
-        <h2>ZKGFs</h2>
-        <p>This is a collection of ZKGFs unlocked by the Union Community. Secure your ZKGF today!</p>
-        <div class="price">Price: 0.01 $nU</div>
-        <button onclick="openCollection('zkgf')">View Collection</button>
+        <section class="collections">
+          <div class="collection-box large-collection">
+            <img src="zkgf.png" class="collection-banner" />
+            <h2>ZKGFs</h2>
+            <p>This is a collection of ZKGFs unlocked by the Union Community. Secure your ZKGF today!</p>
+            <div class="price">Price: 0.01 $nU</div>
+            <button onclick="openCollection('zkgf')">View Collection</button>
+          </div>
+          <div class="collection-box large-collection">
+            <img src="yapy.png" class="collection-banner" />
+            <h2>Union Yapybara</h2>
+            <p>This is a collection of all the Union Yapybara artworks made by me. Secure your favourite piece now!</p>
+            <div class="price">Price: 0.01 $nU</div>
+            <button onclick="openCollection('yapybara')">View Collection</button>
+          </div>
+        </section>
       </div>
-      <div class="collection-box large-collection">
-        <img src="yapy.png" class="collection-banner" />
-        <h2>Union Yapybara</h2>
-        <p>This is a collection of all the Union Yapybara artworks made by me. Secure your favourite piece now!</p>
-        <div class="price">Price: 0.01 $nU</div>
-        <button onclick="openCollection('yapybara')">View Collection</button>
-      </div>
-    </section>
+    </main>
 
     <div id="collection-modal" class="modal hidden">
       <div class="modal-content">
