@@ -2,45 +2,43 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Upload Artwork | Union Artworks Marketplace</title>
-  <link rel="stylesheet" href="/styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upload NFT - Union Artworks Marketplace</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-
-  <header class="site-header">
-    <div class="logo">
-      <img src="/badges3.png" alt="Union Logo" />
+<body class="dark-mode">
+  <header class="header">
+    <div class="left">
+      <img src="union-logo.svg" alt="Union Logo" class="logo" />
       <h1>UNION</h1>
     </div>
-    <h2 class="page-title">Create New Artwork</h2>
+    <div class="center">
+      <h2>Upload NFT</h2>
+    </div>
+    <div class="right">
+      <button id="dark-mode-toggle">☀️ / 🌙</button>
+    </div>
   </header>
 
-  <main class="create-container">
+  <main class="container">
+    <div class="form-box">
+      <label for="artwork-name">Collection / Artwork Name</label>
+      <input type="text" id="artwork-name" placeholder="e.g. Genesis Capybara" />
 
-    <form id="upload-form" class="upload-form">
-      <label for="artwork-name">Artwork Name</label>
-      <input type="text" id="artwork-name" placeholder="e.g. Quantum Yapybara" required />
+      <label for="artwork-price">Price in $nU</label>
+      <input type="number" id="artwork-price" placeholder="e.g. 0.01" step="0.01" />
 
-      <label for="artwork-price">Price (in $nU)</label>
-      <input type="number" id="artwork-price" placeholder="e.g. 0.01" step="0.01" required />
+      <label for="artwork-file">Upload Artwork Image (.png or .jpg)</label>
+      <input type="file" id="artwork-file" accept=".png, .jpg, .jpeg" />
 
-      <label for="artwork-file">Upload Artwork Image</label>
-      <input type="file" id="artwork-file" accept="image/png, image/jpeg" required />
-
-      <button type="button" id="upload-btn">Upload Artwork</button>
-    </form>
-
-    <div id="upload-status"></div>
-
+      <button id="upload-artwork-btn">Upload Artwork</button>
+    </div>
   </main>
 
   <footer class="footer">
-    This is a modal website of Union's marketplace and holds no on-chain activity.
-    $nU is a faucet token and this is for entertainment purposes.
+    <p>This is a modal website of Union's marketplace. No on-chain activity. $nU is a faucet token.</p>
   </footer>
 
-  <script type="module" src="/create.js"></script>
-
+  <script type="module" src="create.js"></script>
 </body>
 </html>
