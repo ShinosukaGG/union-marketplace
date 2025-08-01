@@ -3,44 +3,44 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Upload Artwork – Union Artworks Marketplace</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>Upload Artwork | Union Artworks Marketplace</title>
+  <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
+
   <header class="site-header">
-    <div class="left">
-      <img src="badge3.png" class="logo" />
-      <span class="union-text">UNION</span>
+    <div class="logo">
+      <img src="/union-logo.svg" alt="Union Logo" />
+      <h1>UNION</h1>
     </div>
-    <div class="center">Upload Your Artwork</div>
-    <div class="right">
-      <a href="index.html" style="color: var(--blue); text-decoration: none; font-weight: bold;">← Back</a>
-    </div>
+    <h2 class="page-title">Create New Artwork</h2>
   </header>
 
-  <main class="create-main">
-    <h1 class="create-title">Mint Your Own Union Artwork</h1>
+  <main class="create-container">
 
-    <form id="single-artwork-form" class="artwork-form" onsubmit="return false;">
-      <label for="artwork-image">Artwork Image (JPEG or PNG)</label>
-      <input type="file" id="artwork-image" accept=".jpg,.jpeg,.png" required />
-
+    <form id="upload-form" class="upload-form">
       <label for="artwork-name">Artwork Name</label>
-      <input type="text" id="artwork-name" placeholder="e.g. Genesis #1" required />
+      <input type="text" id="artwork-name" placeholder="e.g. Quantum Yapybara" required />
 
-      <label for="artwork-price">Artwork Price (in $nU)</label>
-      <input type="number" id="artwork-price" step="0.01" min="0" placeholder="e.g. 0.01" required />
+      <label for="artwork-price">Price (in $nU)</label>
+      <input type="number" id="artwork-price" placeholder="e.g. 0.01" step="0.01" required />
 
-      <button type="submit" class="btn-wide final-upload-btn">Upload Artwork</button>
+      <label for="artwork-file">Upload Artwork Image</label>
+      <input type="file" id="artwork-file" accept="image/png, image/jpeg" required />
+
+      <button type="button" id="upload-btn">Upload Artwork</button>
     </form>
+
+    <div id="upload-status"></div>
+
   </main>
 
-  <footer>
-    This is a modal website of Union's marketplace and holds no on-chain activity. $nU is a faucet that holds no value and this is just for entertainment purposes.
+  <footer class="footer">
+    This is a modal website of Union's marketplace and holds no on-chain activity.
+    $nU is a faucet token and this is for entertainment purposes.
   </footer>
 
-  <!-- Supabase JS CDN + Main Script -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"></script>
-  <script src="create.js"></script>
+  <script type="module" src="/create.js"></script>
+
 </body>
 </html>
