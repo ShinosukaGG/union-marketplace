@@ -3,36 +3,38 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Artwork – Union Artworks Marketplace</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>Union Artwork</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <header class="site-header">
+<body class="dark-mode">
+  <header class="header">
     <div class="left">
-      <img src="badge3.png" class="logo" />
-      <span class="union-text">UNION</span>
+      <img src="union-logo.svg" alt="Union Logo" class="logo" />
+      <h1>UNION</h1>
     </div>
-    <div class="center">Union Artworks Marketplace</div>
+    <div class="center">
+      <h2>Union Artworks Marketplace</h2>
+    </div>
     <div class="right">
-      <a href="index.html" style="color: var(--blue); text-decoration: none; font-weight: bold;">← Back</a>
+      <button id="dark-mode-toggle">☀️ / 🌙</button>
     </div>
   </header>
 
-  <main class="artwork-view">
-    <div id="artwork-box" class="mint-box">
-      <div class="loading">Loading artwork...</div>
+  <main class="container">
+    <div id="nft-display" class="artwork-box">
+      <img id="artwork-img" src="" alt="NFT artwork" class="artwork-img" style="max-width:360px;display:block;margin:2rem auto 1rem;" />
+      <h2 id="artwork-name"></h2>
+      <p><strong>Price:</strong> <span id="artwork-price"></span> $nU</p>
+      <div id="not-found" class="hidden">
+        <h3>❌ Artwork not found</h3>
+      </div>
     </div>
   </main>
 
-  <footer>
-    This is a modal website of Union's marketplace and holds no on-chain activity. $nU is a faucet that holds no value and this is just for entertainment purposes.
+  <footer class="footer">
+    <p>This is a modal website of Union's marketplace. No on-chain activity. $nU is a faucet token.</p>
   </footer>
 
-  <!-- Confetti -->
-  <canvas id="confetti-canvas"></canvas>
-
-  <!-- Supabase + Script -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"></script>
-  <script src="artwork.js"></script>
+  <script type="module" src="artwork.js"></script>
 </body>
 </html>
