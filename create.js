@@ -11,7 +11,7 @@ document.getElementById('upload-artwork-btn').addEventListener('click', async ()
   const fileInput = document.getElementById('artwork-file');
   const file = fileInput.files[0];
 
-  if (!name || !price || !file) {
+  if (!name || isNaN(price) || !file) {
     alert('Please fill in all fields and upload an image.');
     return;
   }
@@ -38,7 +38,7 @@ document.getElementById('upload-artwork-btn').addEventListener('click', async ()
     .getPublicUrl(filePath);
 
   if (urlError || !publicUrlData?.publicUrl) {
-    console.error('URL generation error:', urlError?.message);
+    console.error('URL generation error:', urlError?.message, publicUrlData);
     alert('❌ Failed to get public image URL.');
     return;
   }
@@ -58,7 +58,7 @@ document.getElementById('upload-artwork-btn').addEventListener('click', async ()
     ]);
 
   if (insertError) {
-    console.error('Insert error:', insertError.message);
+    console.error('Insert error:', insertError);
     alert('❌ Failed to save NFT metadata.');
     return;
   }
