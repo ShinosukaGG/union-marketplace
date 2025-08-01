@@ -490,6 +490,41 @@ footer {
   }
 }
 
+#mint-btn {
+  background: grey; /* Grey background for Mint */
+  color: white;
+  border: none;
+  font-family: var(--union-font-header);
+  font-size: 1rem;
+  padding: 0.8rem 1.2rem;
+  border-radius: 7px;
+  font-weight: bold;
+  margin-bottom: 1.1rem;
+  width: 100%;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#mint-btn:hover {
+  background: #888;
+}
+
+#share-x-btn {
+  background: var(--union-blue); /* Cyan background for Share */
+  color: black;
+  font-weight: bold;
+  border: none;
+  font-family: var(--union-font-header);
+  font-size: 1rem;
+  padding: 0.75rem 1.2rem;
+  border-radius: 7px;
+  width: 100%;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#share-x-btn:hover {
+  background: #dbf6ff;
+}
+
 /* ========== WIDE BUTTON (for faucet, create, etc) ========== */
 .btn-wide {
   width: 100%;
