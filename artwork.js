@@ -1,86 +1,53 @@
-const SUPABASE_URL = "https://bgoinnfdoxlnktkswzpi.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJnb2lubmZkb3hsbmt0a3N3enBpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM5Njg4MzEsImV4cCI6MjA2OTU0NDgzMX0.dWltf8vuwrB7-54fdFq-xwAqtGjV769ywuLxF4f3EDE";
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-// Extract UUID from URL
-const urlParams = new URLSearchParams(window.location.search);
-const nftId = urlParams.get("id");
+const supabase = createClient(
+  'https://bgoinnfdoxlnktkswzpi.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJnb2lubmZkb3hsbmt0a3N3enBpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM5Njg4MzEsImV4cCI6MjA2OTU0NDgzMX0.dWltf8vuwrB7-54fdFq-xwAqtGjV769ywuLxF4f3EDE'
+);
 
-const box = document.getElementById("artwork-box");
+// 1. Extract the uuid from the URL path (e.g. /09ff95d1-xxxx-xxxx-xxxx-xxxxxxxxxxxx)
+const pathUuid = window.location.pathname.replace('/', '');
 
-// Utility: Load user balance
-function getBalance() {
-  return parseFloat(localStorage.getItem("nU_balance") || "1.00");
-}
-function setBalance(v) {
-  localStorage.setItem("nU_balance", v.toFixed(2));
-}
+async function loadArtwork() {
+  // 2. Fetch NFT metadata from table
+  const { data: nfts, error: nftError } = await supabase
+    .from('nfts')
+    .select('*')
+    .eq('id', pathUuid)
+    .maybeSingle();
 
-// Utility: Load username (fauceted)
-function getUsername() {
-  return localStorage.getItem("union_username") || "anon";
-}
-
-// Load NFT from Supabase
-async function loadNFT() {
-  if (!nftId) {
-    box.innerHTML = "<p>Invalid NFT ID.</p>";
+  if (nftError || !nfts) {
+    document.getElementById('nft-display').style.display = "none";
+    document.getElementById('not-found').classList.remove("hidden");
     return;
   }
 
-  const { data, error } = await supabase.from("nfts").select("*").eq("id", nftId).single();
+  // 3. List all files in the bucket root and find one with the uuid as filename prefix
+  const { data: files, error: fileError } = await supabase
+    .storage
+    .from('nft-artworks')
+    .list('', { limit: 1000 });
 
-  if (error || !data) {
-    box.innerHTML = "<p>Artwork not found.</p>";
+  let artworkFile;
+  if (files && Array.isArray(files)) {
+    artworkFile = files.find(file => file.name.startsWith(pathUuid));
+  }
+  if (!artworkFile) {
+    document.getElementById('nft-display').style.display = "none";
+    document.getElementById('not-found').classList.remove("hidden");
     return;
   }
+  // 4. Construct the image URL
+  const imageUrl = `https://bgoinnfdoxlnktkswzpi.supabase.co/storage/v1/object/public/nft-artworks/${artworkFile.name}`;
 
-  const { name, image_url, price } = data;
+  // 5. Fill in the page
+  document.getElementById('artwork-img').src = imageUrl;
+  document.getElementById('artwork-img').alt = nfts.name || 'NFT artwork';
+  document.getElementById('artwork-name').textContent = nfts.name || 'Unnamed Artwork';
+  document.getElementById('artwork-price').textContent = nfts.price || '0';
 
-  box.innerHTML = `
-    <h2>${name}</h2>
-    <img src="${image_url}" class="artwork-full" />
-    <p><strong>Price:</strong> ${price} $nU</p>
-    <button id="mint-btn" class="btn-wide">Mint Now</button>
-    <div id="mint-status" class="mint-status"></div>
-  `;
-
-  document.getElementById("mint-btn").onclick = () => mintNFT(name, price);
+  document.getElementById('nft-display').style.display = "";
+  document.getElementById('not-found').classList.add("hidden");
 }
 
-// Mint logic
-function mintNFT(name, priceStr) {
-  const balance = getBalance();
-  const price = parseFloat(priceStr);
-
-  if (balance < price) {
-    document.getElementById("mint-status").innerHTML = `<p style="color:red;">Not enough $nU!</p>`;
-    return;
-  }
-
-  setBalance(balance - price);
-  confetti.start();
-  setTimeout(() => confetti.stop(), 3000);
-
-  document.getElementById("mint-status").innerHTML = `
-    <p style="margin-top:10px;"><strong>🎉 Congratulations!</strong> You minted <em>${name}</em></p>
-    <p>Remaining Balance: ${getBalance().toFixed(2)} $nU</p>
-    <a href="index.html" class="btn-wide" style="display:inline-block;margin-top:10px;">Back to Marketplace</a>
-  `;
-  document.getElementById("mint-btn").style.display = "none";
-}
-
-// Start confetti
-const confetti = {
-  canvas: document.getElementById("confetti-canvas"),
-  start: () => {
-    if (confettiInstance) confettiInstance.render();
-  },
-  stop: () => {
-    if (confettiInstance) confettiInstance.clear();
-  }
-};
-const confettiInstance = confetti.create = window.confetti.create(confetti.canvas, { resize: true });
-
-// Load the NFT on page load
-loadNFT();
+loadArtwork();
