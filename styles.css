@@ -526,33 +526,27 @@ footer {
   }
 }
 
-/* ========== CREATE YOUR ARTWORK BUTTON (Landing) ========== */
-.create-artwork-btn {
+/* ========== WIDE BUTTON (for faucet, create, etc) ========== */
+.btn-wide {
+  width: 100%;
+  display: block;
   background: var(--union-blue);
   color: #181b20;
   font-family: var(--union-font-header);
-  font-size: 1.19rem;
+  font-size: 1.15rem;
   font-weight: bold;
   border: none;
-  border-radius: 24px;
-  padding: 1.1rem 2.2rem;
-  margin: 2.1rem auto 2.2rem auto;
-  box-shadow: 0 2px 18px #1a1d23a0;
+  border-radius: 22px;
+  padding: 1.1rem 0;
+  margin: 0.9rem 0 0 0;
+  box-shadow: 0 2px 18px #1113;
   letter-spacing: 0.01em;
-  transition: background 0.16s, color 0.16s, box-shadow 0.16s;
+  transition: background 0.15s, color 0.15s, box-shadow 0.18s;
   cursor: pointer;
-  display: block;
 }
-.create-artwork-btn:hover,
-.create-artwork-btn:focus {
+.btn-wide:hover,
+.btn-wide:focus {
   background: #d6f6ff;
   color: #181b20;
-  box-shadow: 0 4px 32px #1118;
-}
-
-/* ========= ARTWORK PAGE BUTTONS ========= */
-#mint-btn {
-  background: #32343a;
-  color: var(--union-blue);
-  font-family: var(--union-font-header);
-  font-size:
+  box-shadow: 0 4px 32px #1115;
+  }
